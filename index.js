@@ -1,10 +1,11 @@
 var inquirer = require("inquirer");
 var fs = require("fs");
 const os = require("os");
-var axios = require("axios");
+const util = require("util")
 
 // array of questions for user
-const questions = [
+function promptUser () { 
+    return require.prompt([
     {
       type: "input",
       name: "gitHubUserName",
@@ -50,7 +51,10 @@ const questions = [
       name: "tests",
       message: "What testing methods did you use for your project?"
     }
-  ];
+    ]).then((answers)=> {
+        console.log(answers);
+        return answers;
+    });
 
 // function to write README file
 function writeToFile(questions, data) {
@@ -64,9 +68,9 @@ function writeToFile(questions, data) {
 
 function init() {
   inquirer.prompt(questions).then(function(data) {
-    let gitHubUserName = data.gitHubUserName;
-    const queryUrl = `https://api.github.com/users/${gitHubUserName}`;
-    axios.get(queryUrl).then(function(res) {
+    //let gitHubUserName = data.gitHubUserName;
+    // const queryUrl = `https://api.github.com/users/${gitHubUserName}`;
+    // axios.get(queryUrl).then(function(res) {
       let bio = res.data.bio;
       let image = res.data.avatar_url;
       let title = data.title;
@@ -93,10 +97,10 @@ function init() {
         "## Contributing" + "\n" + contributing + "\n\n",
         "## Tests" + "\n" + tests
       ]);
-    });
-  });
-}
+    }
+  )
+    init();
 
 // function call to initialize program
-init();
+
 

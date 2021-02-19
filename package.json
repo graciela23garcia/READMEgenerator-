@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "inquirer": "^6.3.1",
-    "node.js": "0.0.1-security"
+    "node.js": "0.0.1-security",
+    "util": "^0.12.3"
   }
 }
