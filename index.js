@@ -51,9 +51,9 @@ function promptUser () {
       name: "tests",
       message: "What testing methods did you use for your project?"
     }
-    ]).then((answers)=> {
-        console.log(answers);
-        return answers;
+    ]).then((data)=> {
+        console.log(data);
+        return data;
     });
 
 // function to write README file
@@ -67,7 +67,7 @@ function writeToFile(questions, data) {
   }
 
 function init() {
-  inquirer.prompt(questions).then(function(data) {
+    const data = promptUser();
     //let gitHubUserName = data.gitHubUserName;
     // const queryUrl = `https://api.github.com/users/${gitHubUserName}`;
     // axios.get(queryUrl).then(function(res) {
@@ -84,21 +84,15 @@ function init() {
 
       writeToFile("README.md", [
         "# " + title + "\n",
-        "## Developer bio" +
-          "\n" +
-          `![alt text](${image} "Profile picture")` +
-          "\n\n",
-        bio + "\n",
         "## Project description" + "\n\n" + description + "\n\n",
         "## Table of content" + "\n" + tableOfContents + "\n\n",
         "## Installation" + "\n" + installation + "\n\n",
         "## Usage" + "\n" + usage + "\n\n",
         "## License" + "\n" + licence + "\n\n",
         "## Contributing" + "\n" + contributing + "\n\n",
-        "## Tests" + "\n" + tests
-      ]);
+        "## Tests" + "\n" + tests,
+      ])}
     }
-  )
     init();
 
 // function call to initialize program
