@@ -4,8 +4,8 @@ const os = require("os");
 const util = require("util")
 
 // array of questions for user
-function promptUser () { 
-    return require.prompt([
+function promptUser() {
+  return inquirer.prompt([
     {
       type: "input",
       name: "gitHubUserName",
@@ -51,28 +51,22 @@ function promptUser () {
       name: "tests",
       message: "What testing methods did you use for your project?"
     }
-    ]).then((data)=> {
-        console.log(data);
-        return data;
-    });
-
+  ])
+}
 // function to write README file
-function writeToFile(questions, data) {
-    fs.writeFile(questions, data.join(""), function(err) {
-      if (err) {
-        return console.log(err);
-      }
-      console.log("Questions were written in file for README!");
-    });
-  }
+function writeToFile(fileName, data) {
+  fs.writeFile(fileName, data.join(""), function (err) {
+    if (err) {
+      return console.log(err);
+    }
+    console.log("Questions were written in file for README!");
+  });
+}
 
 function init() {
-    const data = promptUser();
-    //let gitHubUserName = data.gitHubUserName;
-    // const queryUrl = `https://api.github.com/users/${gitHubUserName}`;
-    // axios.get(queryUrl).then(function(res) {
-      let bio = res.data.bio;
-      let image = res.data.avatar_url;
+  promptUser()
+    .then((data) => {
+      console.log(data);
       let title = data.title;
       let description = data.description;
       let tableOfContents = data.tableOfContents;
@@ -83,6 +77,7 @@ function init() {
       let tests = data.tests;
 
       writeToFile("README.md", [
+
         "# " + title + "\n",
         "## Project description" + "\n\n" + description + "\n\n",
         "## Table of content" + "\n" + tableOfContents + "\n\n",
@@ -91,9 +86,12 @@ function init() {
         "## License" + "\n" + licence + "\n\n",
         "## Contributing" + "\n" + contributing + "\n\n",
         "## Tests" + "\n" + tests,
-      ])}
-    }
-    init();
+      ])
+    });
+
+
+}
+init();
 
 // function call to initialize program
 
